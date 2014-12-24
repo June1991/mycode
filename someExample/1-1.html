@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>1-1 </title>
+<script type="text/javascript" src="lib/jHtmlArea-0.8.0/scripts/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="lib/jHtmlArea-0.8.0/scripts/jHtmlArea-0.8.js"></script>
+<link rel="Stylesheet" type="text/css" href="lib/jHtmlArea-0.8.0/style/jHtmlArea.css" />
+ <style type="text/css">
+        /* body { background: #ccc;} */
+        div.jHtmlArea .ToolBar ul li a.custom_disk_button 
+        {
+            background: url(images/disk.png) no-repeat;
+            background-position: 0 0;
+        }
+        
+        div.jHtmlArea { border: solid 1px #ccc; }
+    </style>
+</head>
+<body>
+<textarea id="test" cols="50" rows="15"><p><h3>Test H3</h3>This is some sample text to test out the <b>WYSIWYG Control</b>.</p></textarea>
+<script type="text/javascript" >
+	  $(function() {
+           $("textarea").htmlarea(); // Initialize jHtmlArea's with all default values
+       });
+</script>
+</body>
+</html>

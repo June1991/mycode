@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>11-04 pipe</title>
+<script type="application/javascript;version=1.8" >
+function eachlines(s){
+	let p;
+	while((p = s.indexOf("\n")) != -1)
+	{
+		yield s.substring(0,p);
+		s = s.substring(p+1);
+	}
+	if(s.length > 0) yield s;
+}
+
+function map(i,f){
+	for(let x in i)
+	{
+		yield f(x);
+	}
+}
+
+function select(i,f){
+	for (let x in i)
+	{
+		if(f(x)) yield x;
+	}
+}
+
+let text = " #comment \n \n you must try your best \n quit \n don't give up, believe yourself\n ";
+let lines = eachlines(text);
+let trimed = map (lines, function(line){return line.trim();});
+let noblank = select(trimed,function(line){
+	return line.length>0 && line[0] != "#";
+});
+for (let line in noblank){
+	if(line == "quit")break;
+	console.log(line);
+}
+</script>
+</head>
+<body>
+</body>
+</html>
