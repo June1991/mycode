@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>不换行省略+min-height属性</title>
+<style type="text/css">
+
+div{
+	border:1px solid #ccc;
+	background-color:#baa;
+}
+.ellip{
+	width:95%;
+	table-layout:fixed;/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+    border-spacing: 0;
+	border-collapse:collapse;
+	word-wrap: normal;
+	text-align:center;
+}
+
+.ellip-no{
+	width:95%;
+	table-layout:fixed;/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+    border-spacing: 0;
+	border-collapse:collapse;
+	word-wrap: break-word;
+	text-align:center;
+}
+
+td{
+	word-break:keep-all;/* 不换行 */
+	white-space:nowrap;/* 不换行 */
+	overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+	text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+	border: 1px solid #ccc; 
+}
+
+.minH-400{
+	min-height:400px;
+}
+.H-400{
+	height:400px;
+}
+ </style>
+</head>
+<body>
+	<div class="minH-400"></div>
+	<table class="minH-400 ellip">
+		<thead><tr><th>min-height:400px;火狐下不生效,IE7及以下不生效</th></tr></thead>
+		<tr>
+			<td>序号</td>
+			<td>发件人</td>
+			<td>内容</td>
+		</tr>
+		<tr>
+			<td>1</td><td>sujune</td><td>登陆审计测试 微信账号： aictaobaoshop 登陆审计不到 WebQQ账号： 523738786 pass 审计为生活资讯-赶集网/客户端下载后登录不了 淘宝账号： 细水长流1682 pass 天猫账号： 细水长流1682 pass 审计为淘宝 1号店账号： huayutangfeng@126.com pass 1号商城账号： huayutangfeng@126.com pass 当当账号： tomato_888@126.com pass 京东账号： huayutangfeng(13714640719登陆） pass 开心网微博账号：523738786@qq.com pass 土豆网账号： 523738786 pass 审计为微博-腾讯微博 优酷网账号： 523738786 pass 网易账号： huayutangfeng@163.com pass 新浪网账号： 523738786 pass 阿里旺旺账号： 细水长流1682 pass 新浪微博账号： huayutangfeng@126.com pass 腾讯微博账号： 523738786 pass 凤凰微博账号： q285496912@163.com pass 天涯论坛账号： 跟随心灵的声音19 pass 2）即时通讯测试 飞信登陆账号：13714640719 登陆和阻挡都pass 飞信文件传输账号：13714640719 阻挡NO 飞信语音视频账号：13714640719 阻挡NO 飞信文字聊天账号： 13714640719 阻挡NO</td>
+		</tr>
+		<tr>
+			<td>2</td><td>lulu</td><td>014年12月22工作日志 继续上周三个抓包给罗洁雯后的跟进工作 1）QQ邮箱测试 QQ邮箱测试：账号：523738786 正文能审计到，PDF英文附件能审计到，PPT附件也能审计到，还有.RAR压缩文件附件也能审计到 webmail, 加附件先存为草稿，过十分钟再发 ， 咱们设备附件能审计到 ， 深信服附件审计不到。 webmail,先来个邮件保存到草稿箱不发，然后在新发一个带附件的邮件，咱们设备把保存到草稿箱附件也审计到， 深信服深信服就只审计发的附件，保存草稿的附件没审计 2）邮箱客户端测试（ssl和非ssl） 主要测试发邮件附件关键字过滤 huayutangfeng@126.com /huayutangfeng@163.com/huayutangfeng@sina.com ZIP压缩文件是FOXMAIL附件关键字阻挡问题已解决 3）搜索引擎关键字过滤 搜搜：关键字能过滤 搜库：带空格的关键字过滤不了 太平洋快搜：中英文和带空格的都过滤不了 </td>
+		</tr>
+	</table>
+	<br/>
+	<table class="H-400 ellip-no">
+		<thead><tr><th>height:400px;设置word-wrap:break-word;IE10及以下不能达到文本溢出省略标记</th></tr></thead>
+		<tr>
+			<td>序号</td>
+			<td>发件人</td>
+			<td>内容</td>
+		</tr>
+		<tr>
+			<td>1</td><td>sujune</td><td>登陆审计测试 微信账号： aictaobaoshop 登陆审计不到 WebQQ账号： 523738786 pass 审计为生活资讯-赶集网/客户端下载后登录不了 淘宝账号： 细水长流1682 pass 天猫账号： 细水长流1682 pass 审计为淘宝 1号店账号： huayutangfeng@126.com pass 1号商城账号： huayutangfeng@126.com pass 当当账号： tomato_888@126.com pass 京东账号： huayutangfeng(13714640719登陆） pass 开心网微博账号：523738786@qq.com pass 土豆网账号： 523738786 pass 审计为微博-腾讯微博 优酷网账号： 523738786 pass 网易账号： huayutangfeng@163.com pass 新浪网账号： 523738786 pass 阿里旺旺账号： 细水长流1682 pass 新浪微博账号： huayutangfeng@126.com pass 腾讯微博账号： 523738786 pass 凤凰微博账号： q285496912@163.com pass 天涯论坛账号： 跟随心灵的声音19 pass 2）即时通讯测试 飞信登陆账号：13714640719 登陆和阻挡都pass 飞信文件传输账号：13714640719 阻挡NO 飞信语音视频账号：13714640719 阻挡NO 飞信文字聊天账号： 13714640719 阻挡NO</td>
+		</tr>
+		<tr>
+			<td>2</td><td>lulu</td><td>014年12月22工作日志 继续上周三个抓包给罗洁雯后的跟进工作 1）QQ邮箱测试 QQ邮箱测试：账号：523738786 正文能审计到，PDF英文附件能审计到，PPT附件也能审计到，还有.RAR压缩文件附件也能审计到 webmail, 加附件先存为草稿，过十分钟再发 ， 咱们设备附件能审计到 ， 深信服附件审计不到。 webmail,先来个邮件保存到草稿箱不发，然后在新发一个带附件的邮件，咱们设备把保存到草稿箱附件也审计到， 深信服深信服就只审计发的附件，保存草稿的附件没审计 2）邮箱客户端测试（ssl和非ssl） 主要测试发邮件附件关键字过滤 huayutangfeng@126.com /huayutangfeng@163.com/huayutangfeng@sina.com ZIP压缩文件是FOXMAIL附件关键字阻挡问题已解决 3）搜索引擎关键字过滤 搜搜：关键字能过滤 搜库：带空格的关键字过滤不了 太平洋快搜：中英文和带空格的都过滤不了 </td>
+		</tr>
+	</table>
+</body>
+</html>
