@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+    <head>
+         <meta charset="utf-8" />
+		<!--<meta http-equiv="refresh" content = '5'>-->
+         <title></title>
+    </head>
+    <body>
+		<!--我们就是在canvas上画图,这就是photoshop里的画布，height，width，表示高和宽，不带单位，单位是像素-->
+         <canvas id="diagonal" style="border:1px solid"  height="800" width="400">您的浏览器不支持canvas!</canvas>
+        <script>
+		//按照代码的执行顺序看。。。。
+		function drawTree(context)
+		{
+			//在原点附近画一课树
+			
+			//开始描绘路径
+			context.beginPath();
+			//路径，就是类似于photoshop中钢笔工具画出来的东西，在实际的画布上是不存在的。			
+			context.moveTo(-25,-50);//这个就是移动我们的钢笔到这个坐标(-25,-50)
+			context.lineTo(-10,-80);//然后就是从目前钢笔所在的位置，画一条线到(-10,-80),这个时候我们的钢笔就移动到了(-10,-80))
+            context.lineTo(-20,-80);//同上
+            context.lineTo(-5,-110);
+			context.lineTo(-15,-110);
+			context.lineTo(0,-140);
+			context.lineTo(15,-110);
+			context.lineTo(5,-110);
+			context.lineTo(20,-80);
+			context.lineTo(10,-80);
+			context.lineTo(25,-50);
+			//闭合路径
+			context.closePath();//其实吧这个就是相当于(在这段代码里)lineto(-25,-50);类似于在photoshop描绘路径后的闭环
+			
+			//下面就是设置画笔的颜色，宽度之类的东西了
+			context.lineWidth = 4;  //线的宽度
+			context.lineJoin = 'round';  //自己可以把这个注释掉，看看有没有之间的不同，看看各个线条的连接点
+			//这样你树冠的拐角是圆滑的
+			context.strokeStyle = '#663300'; //颜色，不说了。
+			//设置填充样式
+			context.fillStyle = '#339900'; //图像内部填充的样式，也可以定义像photoshop中的渐变色
+			//填充所有闭合路径
+			context.fill();   //这句就是填充上面所有用钢笔工具画出的闭合路径
+				
+			context.fillStyle = '#663300'; //这是换了一个颜色,树干的颜色
+			//填充一个矩形区域
+			context.fillRect(-5,-50,10,50); //画一个矩形前两个是x，y坐标 后面是宽和高，没有边框的
+			//绘制路径
+			context.stroke(); //上面画了路径，我就在这里用画笔工具，描绘一下，photoshop里这个叫什么，我忘记了
+			//至于为什么要放在这里，是因为，先画的话会被内部填充的颜色覆盖掉一部分，就不好看了，你可以放到closePath后看一下区别
+			//就像photoshop后面画的图会覆盖前面一样
+			
+
+		}
+         function drawDiagonal(){
+            var canvas = document.getElementById('diagonal');//首先通过ID获得这个canvas
+            var context = canvas.getContext('2d'); 
+			//这个叫获得绘图的上下文，名字不重要，一般都要写，参数可以是2d，或是3d，分别表示2d画图或是3d画图
+			//canvas 元素，其实就是一块画布，用javascript的命令在上面画图		
+			
+			context.save(); //保存原始的上下文环境，一会儿再说为什么要保存
+			//什么是上下文环境呢
+			//画图，总会需要画笔，画笔就要有画笔的颜色，有画笔的粗细，
+			//在photoshop中，你画一个长方形，它会自动给你填充你想要的颜色（虽然你有时候忘记选成你想要的那种了）
+			//那么这个填充的颜色就是记录在上下文环境中
+			//还有就是我们要画一个点，需要知道这个点的坐标
+			//所以上下文环境中也规定了坐标系的原点，x轴y轴的正方向，就像是在photoshop中的标尺一样
+			//在cavas里面这个坐标系可以重新定义原点的位置
+			//总之吧，上下文环境，就相当于在photoshop中你设置的所有东西。
+			
+            context.translate(130,250);	
+			//刚才说过了，在canvas中我们可以自定义坐标系
+			//默认值，是左上角是坐标原点，水平向右为x轴正方向，竖直向下为y轴正方向
+			//这句话的意思就是，把原来建立的坐标系平移一个向量(130,250)，所以新的坐标系就是原点在原来坐标系的(130,250)，用CSS表示就是在canvas 的 top = 250px left = 130px处			
+			drawTree(context); //这个函数是在原点附近画一课树，注意现在我们的原点在canvas,top=250px ,left = 130px，
+			
+			context.transform(1,0,-0.3,0.6,0,0);
+			//这句话比较复杂，但是也是关于坐标系转换的，现在我们的额原点在 top = 250px ,left = 130px
+			//六个参数，假设为a,b,c,d,e,f
+			//一个坐标对应一个向量，比如坐标(x,y) 那么对应的向量就是x*ex+y*ey (ex,ey是x，y方向的单位向量)
+			//这个transform的意思就是，把原来的单位向量ex，ey，改为nex = a*ex + b*ey; ney = c*ex + d*ey;(nex，ney是新的单位向量)
+			//在这里面就不再是正交直角坐标系里，你自己画一下就知道了
+			//然后坐标原点平移一个向量(e,f) --相对于原来的坐标系的单位向量
+			//所以这就画了一个倾斜的树
+			drawTree(context);//在一个新的坐标系下原点附近画一棵树
+			
+            //恢复原始的上下文环境
+			context.restore(); //上面我们为了自己方便，就把默认值改的乱七八糟，不好恢复，还好我们保存了
+			//=================================================================================
+			context.save(); 
+            context.translate(260,500); //这个不解释
+			context.scale(2,2);//这个相当于nex = 2*ex ; ney = 2*ey; 第一个是x的，第二个参数是y的，可以用小于一的
+			//不知道你发现没，上面两句也可以这么写
+			//context.scale(2,2); 
+			// 这个时候写个 1，就是2个px //自己画一下坐标系就很明显
+			//context.translate(130,250);
+			//因为在坐标系中的单位长度变成了原来的两倍，所以只要表示同一个向量就只需要原来数值的一遍
+			drawTree(context); //所以这个是画了一个原来两倍大的树
+            //恢复原始的上下文环境
+			context.restore();
+
+
+
+			context.save();
+ 			context.translate(-10,350);
+			context.beginPath();
+ 			//绘制曲线，也是路径，就是那条小河
+			context.moveTo(0,0);
+            context.quadraticCurveTo(170,-50,260,-190);
+			//跟lineto 是一样的，只不过多了两个参数 后两个是终点的坐标，前面两个叫控制点的坐标
+			//你看一下windows自带的画图软件怎么画曲线
+			//就是选择曲线的工具，先画一条直线，起点和终点就是上面给出的坐标
+			//然后，拖动上面画的直线上的点，到合适的位置（注意：直线上你选的点不会完全跟随你鼠标的位置）
+			//然后，上面这个控制点就是用画图画曲线时鼠标拖动到的那一点（注意是鼠标的位置），被拖动的点就是刚才你画直线的中点
+			context.quadraticCurveTo(310,-250,410,-250);
+			context.strokeStyle = '#663300'
+			context.lineWidth = 20;
+			context.stroke();
+			context.restore();
+			
+			//下面是文本
+			//定义文本的阴影，
+			context.shadowColor = 'rgba(0,0,0,0.2)'; //颜色
+			context.shadowOffsetX = 15; //位置
+			context.shadowOffsetY = -10; 
+			context.sdhadownBlur = 2;   //模糊
+			//下面开始写字
+			context.font = "60px impact";  //字体 
+			context.fillStyle = "#996600" //填充颜色
+			context.textAlign = "center"; //对齐方式，就是，文本有一个宽度，文本的那一点对齐到下面给出的坐标
+			//这个stroke就是描边的意思 ，也可以用fillText就是填充效果的文本
+			context.strokeText('Happy Trails!',200,60,400); //四个参数分别是：文本，坐标x，坐标y，最大宽度
+			context.stroke();
+			context.restore();
+			//其他函数就没什么，自己到W3Cschool查就可以了。。。。。
+			//其实其他语言的画图过程也大概是这样的，只不过提供的语法不太一样就是了
+			
+         };
+         window.addEventListener("load",drawDiagonal,true);
+        </script>
+    </body>
+</html>
