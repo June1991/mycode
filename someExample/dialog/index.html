@@ -1,0 +1,426 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>dialog</title>
+<link href="common.css" rel="stylesheet" type="text/css" />
+<link href="form.css" rel="stylesheet" type="text/css" />
+<link href="layer.css" rel="stylesheet" type="text/css" />
+<link href="dialog.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../lib/jquery-1.11.1.min.js"></script>
+<script language="javascript" src="dialog.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){					
+	Dialog.init(manipulateDialog);
+	function manipulateDialog(index,Dlg){
+		/*恢复默认值*/
+		$(Dlg).find("[dlg_control='reset']").click(function(){
+			$(Dlg).find("[defaultValue]").each(function(){
+				$(this).val($(this).attr('defaultValue'));
+			});
+		});
+		/*记录当前的输入值*/
+		$(Dlg).find("[dlg_control='record']").click(function(){
+			$(Dlg).find("[saveValue]").each(function(){
+				$(this).attr('saveValue',$(this).val());
+			});
+		});
+		/*撤销当前输入，恢复上一次的输入值*/
+		$(Dlg).find("[dlg_control='reread']").click(function(){
+			$(Dlg).find("[saveValue]").each(function(){
+				$(this).val($(this).attr('saveValue'));
+			});
+		});
+	}
+	/*广告图片对话框初始化*/
+	$("#ad_table").delegate("a","click",function(event){
+		var el = event.target;
+			var dlgId = $(el).attr("dlg-id");
+			var dlg = $("#" + dlgId);
+			var index = $(el).parents("tr")[0].rowIndex;
+			var imgSaveObj = $("input[name='img_info\[\]']:eq("+(index-1)+")");
+			var imgInfo = $("input[name='img_info\[\]']:eq("+(index-1)+")").val();
+			var imgInfoArr = imgInfo.split(",");
+			if(imgInfoArr.length < 3)
+			{
+				return;
+			}
+			else{
+				dlg.attr("data-adId",imgInfoArr[0]);
+				$("#edit_img_title").val(imgInfoArr[1]);
+				$("#edit_img_fake").val(imgInfoArr[2]);
+				$("#edit_img_link").val(imgInfoArr[3]);
+			}
+			var left = ($(window).width() - dlg.outerWidth(true)) / 2;  
+			var top = ($(window).height() - dlg.outerHeight(true)) / 2; 
+			dlg.css({position : 'absolute', top : top, left : left}) ;
+			dlg.show();
+			$("#dlg-shadelayer").show();
+	});	
+	$("#ad_table").delegate("input[type=checkbox]","click",function(){
+		if(true == $(this).prop("checked")){
+			$("#btn_banner").find(".f-bt-disabled").removeClass("f-bt-disabled");
+			if($(this).attr("id") == "all_images"){
+				$("#ad_table").find("input[type=checkbox]").prop("checked",true);	
+			}
+		}
+		else{
+			if($(this).attr("id") == "all_images"){
+				$("#ad_table").find("input[type=checkbox]").prop("checked",false);	
+			}
+			if($("#ad_table").find("input[type=checkbox]:checked").length == 0){
+				$("#btn_banner").find(".bt-basic:gt(0)").addClass("f-bt-disabled");
+			}
+			
+		}
+	});
+	
+	$("#btn_banner").find(".bt-basic").mouseover(function(){
+		if($(this).hasClass("f-bt-disabled") == false)
+		{
+			$(this).removeClass("f-bt-transparent");
+			$(this).addClass("f-bt-normal");
+		}
+	});
+	$("#btn_banner").find(".bt-basic").mouseout(function(){
+		if($(this).hasClass("f-bt-disabled") == false)
+		{
+			$(this).addClass("f-bt-transparent");
+			$(this).removeClass("f-bt-normal");
+		}
+	});
+	
+	/*使用bind绑定，后面clone节点时需要unbind事件*/
+	$("#add_img,#edit_img").bind("change", function(){
+		if("" != $(this).val() && true == checkImg($(this).val())){
+			$('#'+ $(this).attr("id") + '_fake').val($(this).val());
+		} else {
+			$('#'+ $(this).attr("id") + '_fake').val($('#'+ $(this).attr("id") + '_fake').attr('defaultValue'));
+		}
+	});
+});
+function deleteImg(){
+	$("#ad_table").find("input[type=checkbox]:checked").each(function(){
+		if($(this).attr("id") != "all_images"){
+			$(this).parents("tr:first").remove();
+		}
+	});
+	if($("#ad_table").find("input[type=checkbox]").length == 1){
+		$("#btn_banner").find(".bt-basic:gt(0)").removeClass("f-bt-normal");
+		$("#btn_banner").find(".bt-basic:gt(0)").addClass("f-bt-transparent f-bt-disabled");
+	}
+}
+/*添加广告图片*/
+function addImg(e){
+	if(false == checkAdDlg($("#dlg-imgText-add")))
+	{	
+		stopBubble(e);
+		return false;
+	}
+	
+	var imgId = getRandomIdByTime();
+	/*表格中添加一项*/
+	var rowCount = document.getElementById("ad_table").rows.length;
+	var rowObject = document.getElementById("ad_table").insertRow(rowCount);
+	rowObject.innerHTML = "<td><input type='checkbox' name='img_id[]' id='img_id_" + imgId +  "' value='" + imgId + "'/></td>"
+						+ "<td><a dlg-id='dlg-imgText-edit'>" + $("#add_img_title").val() + "</a>"
+								+ "<input type='hidden' name='img_info[]"  + "' value='"+ imgId + "," + $("#add_img_title").val() + "," + $("#add_img_fake").val() + ","+ $("#add_img_link").val()  + ",1" + "'/>"
+						+ "<td><span>" + $("#add_img_link").val() +"</span></td>";
+	
+	/*图片添加*/
+	var real = $("#add_img");
+	var cloned = real.clone(true);
+	real.hide();
+	cloned.insertAfter(real);   
+	real.attr("id","img_"+imgId);
+	$("#img_id_" + imgId).after(real);
+	return true;
+}
+/*删除广告图片*/
+function deleteImg(){
+	$("#ad_table").find("input[type=checkbox]:checked").each(function(){
+		if($(this).attr("id") != "all_images"){
+			$(this).parents("tr:first").remove();
+		}
+	});
+	if($("#ad_table").find("input[type=checkbox]").length == 1){
+		$("#ad_table_btn").find(".bt-basic:gt(0)").removeClass("f-bt-normal");
+		$("#ad_table_btn").find(".bt-basic:gt(0)").addClass("f-bt-transparent f-bt-disabled");
+	}
+}
+/*移动广告图片*/
+function changeImgPos(dir){
+	var indexArr = [];
+	/*找到所有需要移动的行*/
+	$("#ad_table").find("input[type=checkbox]:checked").each(function(){
+		if($(this).attr("id") != "all_images"){
+			indexArr.push($(this).parents("tr")[0].rowIndex);
+		}
+	});
+	var len = indexArr.length;
+	if(len == 0) return;
+	
+	var cur = pos = 0 ;
+	var flag = false;
+	var tbLen = $("#ad_table tr").length; 
+	switch (dir)
+	{
+	case 1: //上移		
+		for(var i=0; i<len; i++){
+			if(flag == false){
+				cur = indexArr[i];;
+				pos = cur - 1;
+				flag  = true;
+			}
+			else if(indexArr[i] == cur + 1){
+				cur = indexArr[i];
+			}
+			else{	
+				if(0 != pos){	//移动节点
+					var trObj = $("#ad_table tr:eq(" + pos + ")")
+					trObj.insertAfter("#ad_table tr:eq(" + cur + ")");
+				}
+				cur = indexArr[i];
+				pos = cur -1;
+			}
+		}
+		if(0 != pos){	//移动节点	
+			var trObj = $("#ad_table tr:eq(" + pos + ")")
+			trObj.insertAfter("#ad_table tr:eq(" + cur + ")");
+		}
+		break;
+	case -1://下移
+		for(var i=len -1; i >=0; i--){
+			if(flag == false){
+				cur = indexArr[i];;
+				pos = cur + 1;
+				flag  = true;
+			}
+			else if(indexArr[i] == cur - 1){
+				cur = indexArr[i];
+			}
+			else{
+				if(tbLen != pos){	//移动节点	
+					var trObj = $("#ad_table tr:eq(" + pos + ")")
+					trObj.insertBefore("#ad_table tr:eq(" + cur + ")");
+				}
+				cur = indexArr[i];
+				pos = cur + 1
+			}
+		}
+		if(pos != tbLen){	//移动节点	
+			var trObj = $("#ad_table tr:eq(" + pos + ")")
+			trObj.insertBefore("#ad_table tr:eq(" + cur + ")");
+		}
+		break;
+	default:
+		
+	}
+}
+/*通过时间戳命名imgId*/
+function getRandomIdByTime(){
+	return (new Date()).getTime();
+}
+
+/*检查广告对话框的合法性*/
+function checkAdDlg(dlg){
+	var imgtitle = dlg.find("input[name='img_title']")[0].value.trim();
+	var imgfile = dlg.find("input[name='img_fake']")[0].value;
+	var imgfileH =  dlg.find("input[name='ad_img\[\]']")[0].value;
+	var imgfileD = dlg.find("input[name='img_fake']")[0].getAttribute("defaultValue");
+	
+	if((imgtitle == "") || ( imgfile == null) || (imgfile != imgfileH && imgfileD !="") )
+	{
+		alert("标题和图片选择不能为空");
+		return false;
+	}
+	return true;
+}
+
+/*检查图片后缀是否合法*/
+function checkImg(imgfile){
+	var reg = /^\S+\.(png|gif|jpg)$/i;
+	if(false == reg.test(imgfile))
+	{
+		alert("图片必须为png、gif、jpg格式");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<header>短信认证自定义页面--对话框的实现</header>
+	<div id="main" class="site-main">
+		<div id="primary" class="content-main">
+			<article>
+				<p>在我的自定义页面中，每一项自定义的内容都需要弹出一个相关的编辑对话框，这些对话框有一些相似的功能，于是我自己写了一个对话框的闭包，基于jQuery开发</p>
+				<p>对话框基本上有以下功能：
+					<ul>
+						<li>点击编辑或相关链接按钮打开对话框</li>
+						<li>点击取消/关闭放弃当前对话框中输入的内容</li>
+						<li>点击恢复默认则恢复对话框初始的内容</li>
+					</ul>
+				</p>
+				<p>现在我们来看第一个对话框，模板文字的编辑</p>
+				<div>
+					<input type="button" value="编辑模板文字" class="bt-normal bt-basic" dlg-id="dlg-contentText"/>
+				</div>
+				<p>接下来我们看的是添加广告图片的对话框，此对话框点击后会生成对应的表项在表中</p>
+				<div>
+					<div class="x_table" style="width:500px;">
+						<div class="x_table_title x-bg-e0edfa" id="btn_banner">
+							<span class="bt-basic f-bt-transparent" id="add-img" dlg-id='dlg-imgText-add'><span class="f-bt-add"></span>添加</span>
+							<span class="bt-basic f-bt-transparent f-bt-disabled"  id="delete-img" onclick="deleteImg();"><span class="f-bt-delete"></span>删除</span>
+							<span style="color:#2160b8;font-size:16px;">|</span>
+							<span class="bt-basic f-bt-transparent f-bt-disabled" id="up-img" onclick="changeImgPos(1);"><span class="f-bt-up"></span>上移</span>
+							<span class="bt-basic f-bt-transparent f-bt-disabled" id="down-img" onclick="changeImgPos(-1);"><span class="f-bt-down"></span>下移</span>
+						</div>
+						<div>
+							<table id="ad_table" border="1px" width="100%">
+							<tr>
+								<td width="2%"><input type="checkbox" name="all_images" id="all_images" value="2"/></td>
+								<td class="alignCenter" width="35%">标签</td>
+								<td class="alignCenter" width="63%">链接地址</td>
+							</tr>
+							<script type="text/javascript">
+							var advertise = [3,							// advertise images count
+											55,"系统默认图片","default.jpg","http://www.baidu.com",	 //imageId title imageName link
+											33,"bulesky","bluesky.jpg","http://www.taobao.com",
+											77,"flower","flower.jpg","http://www.taobao.com",
+											44,"sand","sand.jpg","http://www.jd.com"];
+							var ad_count = advertise[0];
+							var line_count = 4;
+							for(var i = 0; i < ad_count; i++)
+							{
+								document.write("<tr><td><input type='checkbox' name='img_id[]' id='img_id_" + advertise[i*line_count + 1] + "' value='"+ advertise[i*line_count + 1] 
+											+ "'/><input type='file' class='fileInput' name='ad_img[]' id='img_" + advertise[i*line_count + 1] + "' value=''/></td></td>");
+								document.write("<td><a dlg-id='dlg-imgText-edit'>"+ advertise[i*line_count + 2]+"</a><input type='hidden' name='img_info[]' value='" 
+										+ advertise[i*line_count + 1] + "," + advertise[i*line_count + 2] + ","+ advertise[i*line_count + 3]+","+advertise[i*line_count + 4]+",0'/></td>");					
+								document.write("<td><span>" + advertise[i*line_count + 4] + "</span></td></tr>");
+							}
+							</script>					
+							</table>
+						</div>
+					</div>
+				</div>
+				<p>写这个代码的时候收获了三点：
+					<ul>
+						<li>jquery三种绑定事件方式的区别</li>
+						<li>jquery .prop()和,atrr()的区别</li>
+						<li>input type=file如何修改</li>
+					</ul>
+				</p>
+			</article>
+			<div id="dialogs">
+			<!--模板文字编辑-->
+			<div class="dlg-model" id="dlg-contentText" style="width: 500px;" data-title="模板文字">
+				<div class="dlg-content">
+					<fieldset class="x_content">
+						<legend class="title">密码认证</legend>
+						<ul class="x_line_block">
+							<li class="x_line">
+								<span class="toInblock x-width-100">标签名称</span>
+								<input type="text" class="x-width-400" name="label_psw_name" value="密码登录" defaultValue="密码登录" saveValue="密码登录" />
+							</li>
+							<li>
+								<span class="toInblock x-width-100">描述</span>
+								<input type="text" class="x-width-400" name="label_psw_desc" value="内部员工，使用用户名密码方式登录" defaultValue="内部员工，使用用户名密码方式登录"
+									saveValue="内部员工，使用用户名密码方式登录" />
+							</li>
+						</ul>
+					</fieldset>
+					<fieldset class="x_content">
+						<legend class="title">短信认证</legend>
+						<ul class="x_line_block">
+							<li>
+								<span class="toInblock x-width-100">标签名称</span>
+								<input type="text" class="x-width-400" name="label_sms_name" value="手机短信认证" defaultValue="手机短信认证" saveValue="手机短信认证" />
+							</li>
+							<li>
+								<span class="toInblock x-width-100">描述</span>
+								<input type="text" class="x-width-400" name="label_sms_desc" value="访客用户，输入您的手机号码获取临时上网密码。"
+									defaultValue="访客用户，输入您的手机号码获取临时上网密码。" saveValue="访客用户，输入您的手机号码获取临时上网密码。" />
+							</li>
+						</ul>
+					</fieldset>
+					<fieldset class="x_content">
+						<legend class="title"> 版权所有</legend>
+						<div class="x_line">
+							<span class="toInblock x-width-100">描述</span>
+							<input type="text" class="x-width-400" name="copyright" value="版权所有" defaultValue="版权所有" saveValue="版权所有" />
+						</div>
+					</fieldset>
+				</div>
+				<div class="dlg-footer">
+					<input class="dlg-button" value="恢复默认" type="button" dlg_control="reset" />
+					<input class="dlg-button dlg-done" value="确认" type="button" dlg_control="record" />
+					<input class="dlg-button dlg-done" value="取消" type="button" dlg_control="reread" />
+				</div>
+			</div>
+			<div class="dlg-model" id="dlg-imgText-add" style="width: 460px;" data-title="添加广告图片" data-adId="">
+				<div class="dlg-content">
+					<ul class="x_line_block">
+						<li class="x_line">
+							<span class="toInblock x-width-40">标题</span>
+							<input type="text" class="x-width-360" name="img_title" id="add_img_title" value="" defaultValue="" />
+						</li>
+						<li>
+							<span class="toInblock x-width-40">图片</span>
+							<span style="display: inline-block; position: relative;">
+								<input type="text" id="add_img_fake" name="img_fake" style="width: 290px;" disabled="true"
+									defaultValue="文件上传(*.jpg,*.png,*.gif)......"	value="文件上传(*.jpg,*.png,*.gif)......" />
+								<input name="browser" type="button" class="bt-normal bt-basic "	value="browser" />
+								<input name="ad_img[]" id="add_img" type="file" class="fileInput"	value="" />
+							</span>
+							<p style="margin-left: 48px;">建议图片大小为640×400像素</p>
+						</li>
+						<li>
+							<span class="toInblock x-width-40">链接</span>
+							<input type="text" class="x-width-360" name="img_link"	id="add_img_link" value="" />
+							<p style="margin-left: 48px;">链接域名将加入全局排除列表，如果链接页面还有其他地址资源，需手动添加到排除列表</p>
+						</li>
+					</ul>
+				</div>
+				<div class="dlg-footer">
+					<input class="dlg-button dlg-done" id="add_img_btn"	value="确认" type="button" dlg_control="reset" />
+					<input class="dlg-button dlg-done" value="取消" type="button"	dlg_control="reset" />
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="dlg-model" id="dlg-imgText-edit" style="width: 460px;" data-title="编辑广告图片">
+			<div class="dlg-content">
+				<ul class="x_line_block">
+					<li class="x_line"> 
+						<span class="toInblock x-width-40">标题</span>
+						<input type="text" class="x-width-360" name="edit_img_title" id="edit_img_title" value="" defaultValue="" />
+					</li>
+					<li>
+						<span class="toInblock x-width-40">图片</span>
+						<span style="display:inline-block; position:relative;" id="logImg">
+								<input type="text" id="edit_img_fake" name="img_fake" style="width:290px;" disabled="true" value="" />
+								<input name="browser" type="button" class="bt-normal bt-basic " value="browser"/>
+								<input name="edit_img[]" id="edit_img" type="file" class="fileInput" value=""/>
+								
+						</span>
+						<p style="margin-left:48px;">建议图片大小为640×400像素</p>
+					</li>
+					<li>
+						<span class="toInblock x-width-40">链接</span>
+						<input type="text" class="x-width-360" name="img_link" id="edit_img_link"  value=""  />
+						<p style="margin-left:48px;">链接域名将加入全局排除列表，如果链接页面还有其他地址资源，需手动添加到排除列表</p>
+					</li>
+				</ul>	
+			</div>
+			<div class="dlg-footer">
+				<input class="dlg-button dlg-done" value="确认" type="button" dlg_control="record"  id="edit_img_btn" />
+				<input class="dlg-button dlg-done" value="取消" type="button" dlg_control="reread" />
+			</div>
+	</div>
+
+</body>
+ </html>

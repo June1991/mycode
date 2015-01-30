@@ -1,0 +1,107 @@
+@charset "utf-8";
+	 
+input[type="text"],input[type="password"]{
+	border:1px solid #aaa;
+	font-size:12px;
+	color:#333;
+	vertical-align:baseline;
+	height:20px;
+	line-height:20px;
+}
+input[type="text"]:focus,input[type="password"]:focus{
+	border:1px solid #7493d3;
+}
+
+/*input[type="button"] basic style*/
+.bt-basic{
+	display:inline-block;
+	text-align:center;
+	margin:0px;
+	cursor:pointer;
+	border:1px solid #7493d3;
+	font-size:12px;
+	vertical-align:baseline;
+	
+	border-radius:3px;
+	-moz-border-radius:3px;		/*old firefox*/
+	-webkit-border-radius:3px;
+	
+	background:#dae8f9;
+	/*渐变背景*/
+	background:-ms-linear-gradient(top,#fdfeff,#d6e9f7,#c7def0,#9cc4e7);
+	background:-moz-linear-gradient(top,#fdfeff,#d6e9f7,#c7def0,#9cc4e7);
+	background:-webkit-linear-gradient(top,#fdfeff,#d6e9f7,#c7def0,#9cc4e7);
+	background:-o-linear-gradient(top,#fdfeff,#d6e9f7,#c7def0,#9cc4e7);
+	background:-webkit-gradient(linear,center top,center bottom,from(#fdfeff),color-stop(0.33, #d6e9f7),color-stop(0.66, #c7def0),to(#9cc4e7));
+	
+	/*IE7兼容性处理*/
+	*margin-right:4px;
+}
+.bt-transparent,.f-bt-transparent{border:transparent; background:transparent;}
+.bt-normal,.bt-transparent{height:24px;line-height:22px;padding:0px 8px;}
+
+/*not input button need images*/
+.f-bt-normal,.f-bt-transparent,.f-bt-disabled{height:22px;line-height:22px;padding:0px 2px;}
+.f-bt-disabled{color:grey; cursor:default;}
+.f-bt-add,.f-bt-delete,.f-bt-up,.f-bt-down {display:block;height:22px; width:15px;float:left;}
+
+.f-bt-add{background:url(./images/icon.png) -18px 5px no-repeat transparent;}
+.f-bt-delete{background:url(./images/icon.png) 1px 5px no-repeat transparent;}
+.f-bt-up{background:url(./images/icon.png) -71px 5px no-repeat transparent;}
+.f-bt-down{background:url(./images/icon.png) -53px 5px no-repeat transparent;}
+
+.f-bt-close{
+	margin:0px;
+	padding:0px;
+	display:inline-block;
+	height:16px;
+	width:16px;
+	line-height:12px;
+	font-family:"Verdana";
+	font-size:20px;
+	font-weight:normal;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+	
+	background-color: #e56239;
+	position:absolute;
+	right:2px;
+	top:2px;
+	border: 2px solid #e05030;
+	border-radius:3px;
+	-moz-border-radius:3px;		/*old firefox*/
+	-webkit-border-radius:3px;
+	
+	/*渐变边框*/
+    -moz-border-top-colors:#f2b8a8 #efa18f #e76742;
+    -moz-border-right-colors:#e76742 #e43300 #e74307;
+    -moz-border-bottom-colors:#e76742 #e43300 #e74307;
+    -moz-border-left-colors:#f2b8a8 #efa18f #e76742;
+	
+	/*渐变背景*/
+	background:-ms-linear-gradient(top left,#f2b8a8,#efa18f,#e76742,#e43300,#e74307);
+	background:-moz-linear-gradient(top left,#f2b8a8,#efa18f,#e76742,#e43300,#e74307);
+	background:-webkit-linear-gradient(top left,#f2b8a8,#efa18f,#e76742,#e43300,#e74307);
+	background:-o-linear-gradient(top left,#f2b8a8,#efa18f,#e76742,#e43300,#e74307);
+	background:-webkit-gradient(linear, left top, right bottom, from(#f2b8a8), color-stop(0.25, #efa18f), color-stop(0.5, #e76742), color-stop(0.75, #e43300), to(#e74307));
+	
+	/*IE7以下加载图片*/
+	*background:#e76742;
+	*height:18px;
+	*width:18px;
+	*line-height:16px;
+	*border:0px;
+}
+
+.fileInput{			/*input[type=file]完全透明*/
+    height:20px;
+    overflow: hidden;
+    font-size: 12px;
+    position:absolute;
+    right:0;
+    top:0;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    cursor:pointer;
+}

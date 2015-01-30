@@ -1,0 +1,96 @@
+@charset "utf-8";
+
+/*遮罩层，高度大小通过js设置*/
+#shadelayer{		
+	position:absolute;
+	left:0;
+    top:0;
+    opacity: 0.4;
+    filter:alpha(opacity=40);
+	background-color:#333;
+}
+
+ /*带圆角和尖角的提示框*/
+div.pop-angle-tips{
+	position:absolute;
+	background:#f1f0ff;
+	border:1px solid #a1beef;
+	z-index:10;
+	border-radius:5px;
+	-moz-border-radius:5px;  
+	-webkit-border-radius:5px;
+	
+ }
+ .sharp-angle{
+	position:absolute;
+	display:block;
+	height:0px;
+	width:0px;
+ }
+ .angle-left-outer{
+	border-top: 7px dashed transparent; 
+	border-bottom: 7px dashed transparent;
+	border-right: 8px solid #a1beef;
+	border-left: 0;
+	top:5px;
+	left:-9px;
+}
+.angle-left-inner{
+	border-top: 6px dashed transparent; 
+	border-bottom: 6px dashed transparent;
+	border-right: 7px solid #f1f0ff;
+	top: -6px;
+	left: 2px;
+}
+
+
+/*内容块*/
+fieldset.x_content{
+	border:1px solid  #a1beef;
+	margin-bottom:20px;
+	padding:5px 25px;
+}
+fieldset.x_content legend.title{
+	font-weight:bold;
+	padding-left:0 2px;
+}
+
+.x_leve1{
+	padding:5px 15px;
+	line-height:20px;
+	text-align:left;
+}
+.x_leve2{
+	padding-left:10px;
+}
+
+/*模拟表格的div*/
+div.x_table{
+	border:1px solid #708eb3;
+} 
+div.x_table_title{
+	border-bottom:1px solid #2160b8;
+	height:24px;
+	padding:2px;
+}
+
+/*模拟textarea的div*/
+div.x_textarea{
+	border:1px solid #a1beef;
+	outline:0;
+	overflow-x:hidden;
+	overflow-y: auto;
+	_overflow-y: visible;
+	padding:5px;
+}
+
+div.x_textarea>h1{
+	text-align:center;
+	font-size:16px;
+	font-weight:bold;
+	line-height:24px;
+	min-height:24px;
+}
+div.x_textarea>*{
+	word-break:break-all;
+}

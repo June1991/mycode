@@ -1,0 +1,78 @@
+@charset "utf-8";
+
+html,body,div,p,flielset,legend,dl,dt,dd,ul,input{
+	margin:0px;
+	padding:0px;
+	outline:none;
+}
+
+ul,li,ol,input,textarea,img{
+	list-style:none;
+	outline:none;
+	border:0px;
+}
+body {
+    background: none repeat scroll 0 0 #f1f0ff;
+    color: #333;
+    font-family: "宋体","Times New Roman",Times,serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    word-spacing: 1px;
+}
+.x_line_block{
+	min-height:22px;
+	line-height:22px;
+} 
+.x_line_block > *, .x_line{
+	min-height:22px;
+	line-height:22px;
+	margin-bottom:5px;
+}
+
+
+.toInblock{
+	display:inline-block;
+ }
+.toBlock{
+	display:block;
+ }
+.anchor{
+	color:#2160b8;
+	cursor:pointer;
+ }
+.pointer{
+	cursor:pointer;
+}
+.b-disabled{
+	color:#808080;
+ }
+ a:hover{
+	text-decoration:underline;
+	cursor:pointer;
+ }
+ 
+ 
+ /*background*/ 
+.x-bg-e0edfa{
+	background-color:#e0edfa;
+	/*渐变背景*/
+	background:-ms-linear-gradient(top,#e2eefa,#e0edfa,#d2e1f8,#c0d5f2);
+	background:-moz-linear-gradient(top,#e2eefa,#e0edfa,#d2e1f8,#c0d5f2);
+	background:-webkit-linear-gradient(top#e2eefa,#e0edfa,#d2e1f8,#c0d5f2);
+	background:-o-linear-gradient(top,#e2eefa,#e0edfa,#d2e1f8,#c0d5f2);
+	background:-webkit-gradient(linear,center top,center bottom,from(#e2eefa),color-stop(0.33,#e0edfa),color-stop(0.66, #d2e1f8),to(#c0d5f2));
+}
+
+/*一些固定宽度*/
+.x-width-40{width:40px;}
+.x-width-80{width:80px;}
+.x-width-100{width:100px;}
+.x-width-220{width:220px;}
+.x-width-300{width:300px;}
+.x-width-360{width:360px;}
+.x-width-400{width:400px;}
+
+
+/*一些固定高度 */
+.x-height-400{height:400px;}
