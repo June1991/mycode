@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+body { background-color: #FBFDF9 }
+.top_bg { background: -moz-linear-gradient(top, #F0F8EA, #FBFDF9); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F0F8EA), color-stop(1, #FBFDF9)); background: -ms-linear-gradient(top, #F0F8EA, #FBFDF9); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#F0F8EA", endColorstr="#FBFDF9", GradientType="0");
+}
+/*各边框*/
+.login_box ul li .input, .p_input, .sms_go, .login_btn_ok { border-color: #4D8222; }
+/*背景*/
+.login_bidy { background-color: #89CB65; }
+/*标签背景*/
+.login_operate { background-color: #4D8222; }
+/*标签*/
+.login_operate .tab .float_bg  span{ color: #ffffff; background-color: #9F7FB9; background: -moz-linear-gradient(top, #8DC550, #77B439); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #8DC550), color-stop(1, #77B439)); background: -ms-linear-gradient(top, #8DC550, #77B439); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8DC550", endColorstr="#77B439", GradientType="0");
+}
+/*标签内容*/
+.login_operate .form { background-color: #77B439; }
+/**/
+.static-container .statement-content { background: #4D8222; }
+/*按钮*/
+.login_btn_ok { background: -webkit-gradient(linear, 0 0, 0 100%, from(#FFE655), to(#FF9900)); background: -moz-linear-gradient(top, #FFE655, #FF9900); background: -ms-linear-gradient(top, #FFE655, #FF9900); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFE655, endColorstr=#FF9900, grandientType=1);
+color: #000; }
+.sms_go { background: -webkit-gradient(linear, 0 0, 0 100%, from(#DEECBD), to(#9DD580)); background: -moz-linear-gradient(top, #DEECBD, #9DD580); background: -ms-linear-gradient(top, #DEECBD, #9DD580); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#DEECBD, endColorstr=#9DD580, grandientType=1);
+color: #000; }
+/*提示*/
+.login_box_title p { color: #ffffff; }
+.login_operate .tab, .login_disclaimer dl dd { color: #ffffff; }
+.form a { color: #FFFF00 !important; }
+.form a:hover { color: #FFFF00 !important; }
+/*底部*/
+.footer { color: #335571; border-top: 6px solid #DEF1D4; }

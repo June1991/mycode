@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+wlan皮肤配置模板，主要用于php或CSS端依据此文件进行样式换算，单色变换模板；后续版本增加新的模板时可参考此版本进行改进
+Author	:	benx
+Date	:	2013/09/05
+-->
+<skin>
+<version value="1.0" for="portal.wlan.sangfor" support="1.3"/>
+<author>benxshare@sangfor.com</author>
+<designer>kangcheng@sangfor.com</designer>
+<updated value="2013-10-25"/>
+<rules page="PC.html">
+<css selector="body">
+<text><![CDATA[background-color:%0 !important;]]></text>
+<param index="0" transform="keepLight" offset="99.5"/>
+</css>
+<css selector=".top_bg">
+<text><![CDATA[background: -moz-linear-gradient(top, %0, %1); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, %0), color-stop(1, %1)); background: -ms-linear-gradient(top, %0, %1); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="%0", endColorstr="%1", GradientType="0");]]></text>
+<param index="0" transform="bright" offset="45" min="60"/>
+<param index="0" transform="bright" offset="55" min="230"/>
+</css>
+<css selector=".login_box ul li .input, .p_input, .sms_go, .login_btn_ok">
+<text><![CDATA[border-color: %0;]]></text>
+<param index="0" transform="keep"/>
+</css>
+<css selector=".login_bidy">
+<text><![CDATA[background-color: %0;]]></text>
+<param index="0" transform="keep"/>
+</css>
+<css selector=".login_operate">
+<text><![CDATA[background-color: %0;]]></text>
+<param index="0" transform="dark" offset="8"/>
+</css>
+<css selector=".login_operate .tab .float_bg">
+<text><![CDATA[overflow:hidden;]]></text>
+</css>
+<css selector=".login_operate .tab .float_bg span">
+<text><![CDATA[color: #ffffff; background-color: %1; background: -moz-linear-gradient(top, %0, %1); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, %0), color-stop(1, %1)); background: -ms-linear-gradient(top, %0, %1); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="%0", endColorstr="%1", GradientType="0"); display:block;width:100%;height:100%;]]></text>
+<param index="0" transform="bright" offset="25"/>
+<param index="1" transform="bright" offset="15"/>
+</css>
+<css selector=".login_operate .form">
+<text><![CDATA[background-color: %0;]]></text>
+<param index="0" transform="bright" offset="15"/>
+</css>
+<css selector=".static-container .statement-content">
+<text><![CDATA[background-color: %0;]]></text>
+<param index="0" transform="keep"/>
+</css>
+<css selector=".login_btn_ok">
+<text><![CDATA[background: -webkit-gradient(linear, 0 0, 0 100%, from(#FFE655), to(#FF9900)); background: -moz-linear-gradient(top, #FFE655, #FF9900 undefined); background: -ms-linear-gradient(top, #FFE655, #FF9900); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFE655, endColorstr=#FF9900, grandientType=1);
+color: #000;]]></text>
+</css>
+<css selector=".sms_go">
+<text><![CDATA[background: -moz-linear-gradient(top, %0, %1); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, %0), color-stop(1, %1)); background: -ms-linear-gradient(top, %0, %1); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="%0", endColorstr="%1", GradientType="0");]]></text>
+<param index="0" transform="keepLight" offset="90"/>
+<param index="0" transform="keepLight" offset="70"/>
+</css>
+
+<css selector=".login_box_title p,.login_operate .tab, .login_disclaimer dl dd">
+<text><![CDATA[color:%0;]]></text>
+<param index="0" transform="bright" offset="100"/>
+</css>
+<css selector=".form a">
+<text><![CDATA[color:%0 !important;]]></text>
+<param index="0" transform="bright" offset="60"/>
+</css>
+<css selector=".form a:hover">
+<text><![CDATA[color:%0 !important;]]></text>
+<param index="0" transform="bright" offset="60"/>
+</css>
+<css selector=".footer">
+<text><![CDATA[ color:%0 !important; border-top: 6px solid %1;]]></text>
+<param index="0" transform="dark" offset="100"/>
+<param index="1" transform="bright" offset="30"/>
+</css>
+
+</rules>
+<rules page="mobile.html">
+	<css selector="body">
+		<text><![CDATA[background-color: %0;]]></text>
+		<param transform="keepLight" offset="99.5"/>
+	</css>
+<!-- 顶部渐变 -->
+<css selector=".header">
+	<text><![CDATA[background: -webkit-gradient(linear, left top, left bottom, color-stop(0, %0), color-stop(1, %1)); background: -moz-linear-gradient(top, %0, %1); background: -ms-linear-gradient(top, %0, %1); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="%0", endColorstr="%1", GradientType="0");]]></text>
+	<param transform="keepLight" offset="93"/>
+	<param transform="keepLight" offset="99.5"/>
+	
+</css>
+<!--标签-->
+<css selector=".login_operate .tab">
+	<text><![CDATA[background: -webkit-gradient(linear, 0 0, 0 120%, from(%0), to(%1)); background: -moz-linear-gradient(top, %0, %1 120%); background: -ms-linear-gradient(top, %0, %1); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=%0, endColorstr=%1, grandientType=1);color: #FFF;]]></text>
+	<param transform="bright" offset="25"/>
+	<param transform="bright" offset="5"/>
+</css>
+<!--边框-->
+<css selector=".login_operate .tab li.float_bg, .login_operate .form, .login_operate .tab, .static-container .statement-content">
+<text><![CDATA[border-color: %0;]]></text>
+<param transform="bright" offset="20"/>
+</css>
+<!--当前标签-->
+<css selector=".login_operate .tab li.float_bg">
+	<text><![CDATA[ border-bottom: 1px solid %0; ]]></text>
+	<param transform="bright" offset="50"/>
+</css>
+<!--标签内容-->
+<css selector=".login_operate .form">
+	<text><![CDATA[ border-top: none; ]]></text>
+</css>
+<!--提交按钮-->
+<css selector=".btn_ok .login_btn_ok .button">
+ <text><![CDATA[background: -webkit-gradient(linear, 0 0, 0 100%, from(#FEDC56), to(#FBB42F)); background: -moz-linear-gradient(top, #FEDC56, #FBB42F); background: -ms-linear-gradient(top, #FEDC56, #FBB42F); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FEDC56, endColorstr=#FBB42F, grandientType=1);color: #000; border-color: #CF8905;]]></text>
+</css>
+</rules>
+</skin>
